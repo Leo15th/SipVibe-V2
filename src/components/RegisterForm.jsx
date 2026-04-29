@@ -34,8 +34,6 @@ export default function RegisterForm({onClose, onSwitchToLogIn}){
 
             //alert for the remind the verification
             alert("Register Successful! We've sent a verification link to your email. Please open your inbox, click the link, and then log in.");
-
-            alert("Register Successful!!");
             onClose();
         } catch (error){
             alert(error.message)
