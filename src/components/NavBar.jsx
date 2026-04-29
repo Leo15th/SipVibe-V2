@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import PopupBoxContainer from "./PopupBoxContainer";
 import LogInForm from "./LogInForm";
 import RegisterForm from "./RegisterForm";
+
 export default function NavBar({shopName, links}){
     const [showLogInForm, setShowLogInForm] = useState(false);
     const [showRegisterForm, setShowRegisterForm]= useState(false);
@@ -33,10 +34,22 @@ export default function NavBar({shopName, links}){
                 </div>
             </div>
             <PopupBoxContainer isOpen={showLogInForm} onClose={()=> setShowLogInForm(false)}>
-                <LogInForm/>
+                <LogInForm 
+                    onClose = {()=>setShowLogInForm(false)}
+                    onSwitchToRegister={()=>{
+                        setShowLogInForm(false)
+                        setShowRegisterForm(true)
+                    }}
+                />
             </PopupBoxContainer>
             <PopupBoxContainer isOpen={showRegisterForm} onClose={()=> setShowRegisterForm(false)}>
-                <RegisterForm/>
+                <RegisterForm
+                    onClose={()=>setShowRegisterForm(false)}
+                    onSwitchToLogIn={()=>{
+                        setShowRegisterForm(false)
+                        setShowLogInForm(true)
+                    }}
+                />
             </PopupBoxContainer>
         </nav>
     )
