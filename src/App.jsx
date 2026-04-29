@@ -9,7 +9,7 @@ import { useState } from "react";
 
 export  default function App() {
   return (
-    <Router>
+    <Router basename="/SipVibe-V2/">
       {/* NavBar always visible */}
       <NavBar 
         shopName={"Sip Vibe"}

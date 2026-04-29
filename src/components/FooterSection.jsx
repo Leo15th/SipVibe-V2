@@ -16,7 +16,7 @@ export default function FooterSection({links}){
                 <ul className="flex flex-col gap-2">
                     {
                         links.map((link, index)=>(
-                            <li key={index} className="text-md hover:scale-105 hover:text-amber-400 hover:cursor-pointer hover:scale-125 w-fit">{link}</li>
+                            <li key={index} className="text-md hover:text-amber-400 hover:cursor-pointer hover:scale-125 w-fit">{link}</li>
                         ))
                     }
                 </ul>
