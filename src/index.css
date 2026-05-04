@@ -9,11 +9,25 @@
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
+  transition: all 150ms ease-in-out
 };
+html{
+  scroll-behavior: smooth;
+}
+/* Hide scrollbar but keep scrolling */
+.scrollbar-hidden {
+  scrollbar-width: none; /* Firefox */
+}
 
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
 @layer utilities {
+  .white-text-shadow-sm {
+    text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.5);
+  }
   .white-text-shadow-md {
-    text-shadow: 4px 4px 5px rgba(255, 255, 255, 0.5);
+    text-shadow: 3px 3px 5px rgba(255, 255, 255, 0.5);
   }
   .white-text-shadow-lg {
     text-shadow: 5px 5px 10px rgba(255, 255, 255, 0.5);

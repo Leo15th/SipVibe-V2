@@ -1,48 +1,51 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/NavBar"
 import HeroSection from "./components/HeroSection";
 import CategorySection from "./components/CategorySection";
 import FutureProductsSection from "./components/FutureProductsSection";
 import FooterSection from "./components/FooterSection";
-import MenuPage from "./components/MenuPage";
+import Modal from "./components/Modal";
+import MenuPage from "./pages/MenuPage";
 import { useState } from "react";
-
 export  default function App() {
+  const [showModal, setShowModal] = useState(false)
+  const [modalMode, setModalMode] = useState(null);
   return (
-    <Router basename="/SipVibe-V2/">
-      {/* NavBar always visible */}
-      <NavBar 
-        shopName={"Sip Vibe"}
-        links={["Home", "Category", "Contact"]}
+    <>
+      <NavBar
+        shopName="Sip Vibe"
+        links={["home", "category", "contact"]
+        }
+        logInClick={()=>{setShowModal(true); setModalMode("login")}}
+        registerClick={()=>{setShowModal(true); setModalMode("register")}}
       />
-      {/* Define Routes from different Page */}
-      <Routes>
-        {/* HomePage Landing Page */}
-        <Route
-          path="/"
-          element = {
-            <>
-              <HeroSection />
-              <CategorySection />
-              <FutureProductsSection />
-              <FooterSection 
-                links={(["Home", "Category", "Future Products"])}
-                />
-            </>
-          }
+      <section>
+        <MenuPage 
+          tabs={["shake", "smoothie", "boba", "coffee", "tea","mocktail", "fruit-water"]}
         />
-
-        {/* MenuPage */}
-        <Route
-          path="/menu"
-          element ={
-            <MenuPage/>
-          }
+      </section>
+      {/* <section id="home"> 
+        <HeroSection/>
+      </section>
+      {showModal && 
+        <Modal 
+          mode={modalMode}
+          onClose = {()=>setShowModal(false)}
+          onSwitchMode = {(newMode)=> setModalMode(newMode)}
         />
-        <Route path="/category" element={<CategorySection />} />
-        <Route path="/contact" element={<FooterSection links={["Home", "Category", "Future Products"]} />} />
-
-      </Routes>
-    </Router>
+      }
+      <section id="category">
+        <CategorySection/>
+      </section>
+      <section id="futureProduct">
+        <FutureProductsSection/>
+      </section>
+      <section id="contact">
+        <FooterSection id="futureproducts"
+        links ={
+          ["home","menu", "category", "future Products"]
+        }
+        />
+      </section> */}
+    </>
   );
 }

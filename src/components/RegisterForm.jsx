@@ -1,61 +1,70 @@
-import { createUserWithEmailAndPassword } from "firebase/auth"
-import {doc, setDoc} from "firebase/firestore"
-import {auth, db} from "../firebase"
-import { sendEmailVerification } from "firebase/auth"
-
+import {doc, setDoc} from "firebase/firestore";
+import { db } from "../firebase";
+import { auth } from "../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { sendEmailVerification } from "firebase/auth";
+import { useState } from "react";
+import Button from "./Button";
 export default function RegisterForm({onClose, onSwitchToLogIn}){
+    const [formData, setFormData] = useState({
+        fullName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+    })
+    const handleChange = (e)=>{
+        setFormData({...formData,[e.target.name]: e.target.value})
+    }
+    const validatePassword = (password, confirmPassword)=>{
+        if(password !== confirmPassword){
+            alert("Password do not match!")
+            return false;
+        }
+        return true;
+    }
+    const [loading, setLoading] = useState(false)
     const handleRegister = async (e)=>{
         e.preventDefault();
-
-        //getvalues from input
-        const name = e.target.elements.name.value;
-        const email = e.target.elements.email.value;
-        const password = e.target.elements.password.value;
-        const confirmPassword = e.target.elements.confirmPassword.value;
-
-        // Check if passwords match
-        if (password !== confirmPassword) {
-        alert("Passwords do not match!");
-        return;
-        }
-        try{
-            //1.create user in fire base  authentication
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        if(!validatePassword(formData.password, formData.confirmPassword)) return;
+        setLoading(true)
+        try {
+            const userCredential = await createUserWithEmailAndPassword(
+                auth,
+                formData.email,
+                formData.password
+            )
             const user = userCredential.user;
-    
-            //2.save extra info in firestore
             await setDoc(doc(db, "users", user.uid),{
-                name,
-                email,
-                createdAt: new Date()
+                fullName: formData.fullName,
+                email: formData.email,
+                createdAt: new Date(),
             });
-            //3.send email verification
             await sendEmailVerification(user);
-
-            //alert for the remind the verification
-            alert("Register Successful! We've sent a verification link to your email. Please open your inbox, click the link, and then log in.");
+            alert("Registration Successful!")
             onClose();
-        } catch (error){
+        } catch (error) {
             alert(error.message)
+        } finally{
+            setLoading(false)
         }
     }
-
     return(
-        <form onSubmit={handleRegister} className="pt-32 px-10 flex flex-col w-1/3 gap-4 relative backdrop-blur-lg border border-white/50 rounded-2xl">
-            <button onClick={onClose} className="text-4xl absolute top-0 right-2 text-gray-500 hover:text-gray-700">×</button>
-            <h3 className="text-3xl self-center font-bold bg-gradient-to-br from-white/95 via-red-700 to-red-800 rounded-b-xl w-fit p-3 absolute top-0 text-white black-text-shadow-md">Register</h3>
-            <div className="flex flex-col gap-6 mb-8">
-                <div className="grid grid-cols-2 gap-5 gap-y-10 mb-6">                            
-                    <input name="name" type="text" placeholder="Name" className="w-full text-lg px-2 py-1 rounded-2xl bg-transparent border border-white/10 outline-none text-gray-400"/>
-                    <input name="email" type="email" placeholder="Email"  className="w-full text-lg px-2 py-1 rounded-2xl bg-transparent border border-white/10 outline-none text-gray-400"/>
-                    <input name="password" type="password" placeholder="Password"  className="w-full text-lg px-2 py-1 rounded-2xl bg-transparent border border-white/10 outline-none text-gray-400"/>
-                    <input name="confirmPassword" type="password" placeholder="Confirm Password"  className="w-full text-lg px-2 py-1 rounded-2xl bg-transparent border border-white/10 outline-none text-gray-400"/>
-                </div>
-                <button type="submit" className="border rounded-lg w-fit bg-white text-black px-8 py-2 transition-all duration-500 self-center text-xl hover:font-bold hover:text-slate-300 hover:black-text-shadow-md hover:scale-125 hover:shadow-md hover:shadow-white">Register</button>
-                <div className="flex gap-2">
-                    <div className="capitalize text-white text-md">Do You have an account?</div>
-                    <div className="capitalize text-green-700 transition-all duration-200 hover:animate-bounce cursor-pointer" onClick={onSwitchToLogIn}>Log In Here</div>
-                </div>
+        <form onSubmit={handleRegister} className="border p-10 flex flex-col gap-6 backdrop-blur-xl rounded-2xl pt-24 relative">
+            <div className="absolute top-0 left-0 right-0">
+                <h3 className="text-4xl font-mono font-extrabold bg-red-600 w-fit mx-auto px-2 py-1 rounded-b-xl">Register</h3>
+            </div>
+            <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} disabled={loading} placeholder="Name" className="px-2 py-1 outline-none bg-transparent border border-white/40 rounded-lg text-lg"/>
+            <input type="email" name="email" value={formData.email} onChange={handleChange} disabled={loading} placeholder="Email" className="px-2 py-1 outline-none bg-transparent border border-white/40 rounded-lg text-lg"/>
+            <input type="password" name="password" value={formData.password} onChange={handleChange} disabled={loading} placeholder="Password" className="px-2 py-1 outline-none bg-transparent border border-white/40 rounded-lg text-lg"/>
+            <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} disabled={loading} placeholder="Confirm Password" className="px-2 py-1 outline-none bg-transparent border border-white/40 rounded-lg text-lg"/>
+            <div className="w-1/2 mx-auto">
+            <Button type="submit" btnName={loading?"Registering": "Register"} disabled={loading}/></div>
+            <div className="flex gap-2 text-md">
+                <p className="capitalize">do you have an account?</p>
+                <button onClick={onSwitchToLogIn} className="text-green-600 duration-500 transition-transform hover:animate-bounce hover:white-text-shadow-sm">Log In Here</button>
+            </div>
+            <div className="z-20 absolute right-0 top-0 px-3">
+                <button onClick={onClose} className="text-4xl hover:scale-110 hover:text-red-600 hover:cursor-pointer hover:font-bold hover:white-text-shadow-sm"> × </button>
             </div>
         </form>
     )

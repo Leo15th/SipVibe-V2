@@ -1,28 +1,27 @@
-import fruitWater from "../assets/futureProducts/fruit-water.jpg"
-import matchaLatte from "../assets/futureProducts/matcha-latte.jpg"
-import proteinSmoothie from "../assets/futureProducts/protein-smoothie.jpg"
-import veganShake from "../assets/futureProducts/vegan-shake.jpg"
 import SectionHeader from "./SectionHeader"
 import ImageCard from "./ImageCard"
 export default function FutureProductsSection(){
-    const futureProducts = [
-        {title: "fruit Water", image: fruitWater},
-        {title: "matcha Latte", image: matchaLatte},
-        {title: "protein Smoothie", image: proteinSmoothie},
-        {title: "vegan Shake", image: veganShake}
-    ]
+    const images = import.meta.glob("../assets/futureProducts/*{jpg,jpeg,png}", {eager:true});
+    const futureProducts = Object.keys(images).map((path)=>{
+        const fileName = path.split("/").pop().split(".")[0];
+        return {
+            title: fileName,
+            image: images[path].default
+        }
+    })
     return(
-        <section className="py-20 px-40 bg-gray-700">
-            <SectionHeader
-                title= "Future Products"
-                subtitle = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus voluptates architecto fuga!"
-            />
-            <div className="grid grid-cols-4 md:grid-cols-3 gap-10">
-                {futureProducts.map((futureProduct, index)=>(
-                    <ImageCard key={index} title={futureProduct.title} image={futureProduct.image}/>
-                )
-            )}
+        <div className="bg-slate-900 py-10 px-5 md:py-14 md:px-10 lg:py-20 lg:px-20">
+            <SectionHeader 
+            header = "Future Products"
+            p = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, maxime."/>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+                {
+                    futureProducts.map((futureProduct, index)=>
+                    <ImageCard key={index} title={futureProduct.title}
+                    image={futureProduct.image}/>
+                    )
+                }
             </div>
-        </section>
+        </div>
     )
 }

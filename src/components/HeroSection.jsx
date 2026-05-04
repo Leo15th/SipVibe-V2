@@ -1,14 +1,16 @@
-import { Link } from "react-router-dom";
+import Button from "./Button"
 export default function HeroSection(){
-    return (
-        <section className="h-screen bg-hero bg-cover bg-center flex justify-center items-center">
-            <div className="border border-white/50 text-white p-20 flex flex-col gap-10 w-3/5 rounded-3xl backdrop-blur-sm hover:shadow-lg hover:shadow-white/90">
-                <h2 className="text-5xl font-bold white-text-shadow-lg">Welcome to Sip Vibe</h2>
-                <p className="text-lg white-text-shadow-md">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet quibusdam adipisci neque voluptatem veniam alias modi esse, molestias sint, vitae officia, necessitatibus libero explicabo!</p>
-                <Link to="/menu">
-                    <button className="border border-white/60 rounded-lg w-fit mx-auto px-6 py-2 text-lg font-bold hover:scale-110 hover:border-[4px] hover:border-amber-400/95 hover:shadow-lg hover:shadow-amber-400/40">Explore Menu</button>
-                </Link>
+    return(
+        <div className="h-screen bg-hero bg-fixed bg-cover lg:bg-center sm:bg-left flex justify-center items-center px-10 lg:px-20">
+            <div className="text-white border border-white/50 rounded-2xl py-10 px-10 lg:py-20 lg:px-20 w-fit md:w-4/5 lg:w-3/5 flex flex-col gap-8 backdrop-blur-md hover:shadow-md lg:hover:shadow-lg hover:shadow-white">
+                <h2 className="text-4xl lg:text-5xl font-bold font-serif white-text-shadow-md">Welcome to Sip Vibe</h2>
+                <p className="text-md lg:text-lg white-text-shadow-sm">
+                    Your ultimate destination for refreshing beverages and delightful
+                    treats. Explore our menu and find your perfect sip today!
+                </p>
+                <Button 
+                btnName="Explore Menu"/>
             </div>
-        </section>
+        </div>
     )
 }

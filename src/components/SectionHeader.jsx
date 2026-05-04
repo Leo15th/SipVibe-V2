@@ -1,8 +1,8 @@
-export default function SectionHeader({title, subtitle}){
+export default function SectionHeader({header, p}){
     return(
-        <div className="text-white flex flex-col gap-10 mb-10">
-                <h3 className="text-5xl black-text-shadow-md font-bold">{title}</h3>
-                <p className="text-lg black-text-shadow-md">{subtitle}</p>
-            </div>
+        <div className="flex flex-col gap-8 text-white mb-12">
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold">{header}</h3>
+            <p className="text-white sm:text-sm md:text-md lg:text-lg">{p}</p>
+        </div>
     )
 }
