@@ -3,15 +3,17 @@ import LogInForm from "./LogInForm";
 import RegisterForm from "./RegisterForm";
 import Button from "./Button";
 
-export default function Modal({mode, onClose, onSwitchMode}){
+export default function Modal({mode, onClose, onSwitchMode, setUser}){
     return(
         <div className="fixed inset-0 z-50 bg-black/50 text-white flex justify-center items-center">
             {mode=== "login" && (
                 <LogInForm onClose={onClose}
                 onSwitchToRegister = {()=> onSwitchMode("register")}
+                setUser={setUser}
                 />)}
             {mode=== "register" && (<RegisterForm onClose={onClose}
                 onSwitchToLogIn = {()=> onSwitchMode("login")}
+                setUser= {setUser}
                 />)}
         </div>
     )

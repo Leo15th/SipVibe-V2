@@ -2,7 +2,7 @@ import Button from "./Button"
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-export default function LogInForm({onClose, onSwitchToRegister}){
+export default function LogInForm({onClose, onSwitchToRegister, setUser}){
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -25,7 +25,7 @@ export default function LogInForm({onClose, onSwitchToRegister}){
                 return
             }
             alert("Log In Successful!")
-            onClose();
+            setUser(user);
         } catch (error) {
             alert(error.message)
         } finally{

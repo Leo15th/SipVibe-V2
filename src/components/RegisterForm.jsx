@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { sendEmailVerification } from "firebase/auth";
 import { useState } from "react";
 import Button from "./Button";
-export default function RegisterForm({onClose, onSwitchToLogIn}){
+export default function RegisterForm({onClose, onSwitchToLogIn, setUser}){
     const [formData, setFormData] = useState({
         fullName: "",
         email: "",
@@ -41,7 +41,7 @@ export default function RegisterForm({onClose, onSwitchToLogIn}){
             });
             await sendEmailVerification(user);
             alert("Registration Successful!")
-            onClose();
+            setUser(user)
         } catch (error) {
             alert(error.message)
         } finally{
