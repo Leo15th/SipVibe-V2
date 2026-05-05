@@ -71,6 +71,10 @@ export default function NavBar({links, shopName, logInClick, registerClick, user
                     <MobileMenu
                         links={links}
                         toggleMobileMenu={toggleMobileMenu}
+                        logInClick={logInClick}
+                        registerClick={registerClick}
+                        user={user}
+                        onLogout={onLogout}
                     />
                 </>
             )}
