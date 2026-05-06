@@ -2,17 +2,17 @@ import { Link } from "react-scroll"
 export default function FooterSection({links}){
     return(
         <div className="px-20 pt-10 pb-5 bg-black">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-12 text-white px-10 py-5">
-                <div className="px-2 lg:px-5 mx-auto">
-                    <h3 className="text-xl font-bold mb-3 gold-text-shadow-sm text-center">Sip Vibe</h3>
-                    <p className="text-lg text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, quasi!</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 text-white px-10 py-5">
+                <div className="px-2 lg:px-5 w-full">
+                    <h3 className="text-2xl font-bold mb-3 gold-text-shadow-sm text-center">Sip Vibe</h3>
+                    <p className="text-md text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, quasi!</p>
                 </div>
-                <div className="mx-auto">
+                <div className="w-full">
                     <h3 className="text-xl font-bold mb-3 gold-text-shadow-sm text-center">Quick Links</h3>
-                    <ul className="flex flex-col gap-2 items-start mx-auto w-fit">
+                    <ul className="flex flex-col gap-2 w-full items-start">
                         {
                             links.map((link,index)=>(
-                                <li className="capitalize hover:text-amber-400 hover:cursor-pointer hover:white-text-shadow-sm hover:scale-125 text-center" key={index}>
+                                <li className="capitalize hover:text-amber-400 hover:cursor-pointer hover:white-text-shadow-sm hover:scale-125 md:mx-auto" key={index}>
                                     <Link 
                                         to={link.toLowerCase().replace(/\s+/g, "-",)}
                                         smooth={true}
@@ -23,7 +23,7 @@ export default function FooterSection({links}){
                         }
                     </ul>
                 </div>
-                <div className="mx-auto sm:w-full md:col-span-1 sm:col-span-2 grid md:grid-cols-1 sm:grid-cols-2 items-center">
+                <div className="sm:w-full md:col-span-1 sm:col-span-2 grid md:grid-cols-1 sm:grid-cols-2 items-center">
                     <div className="flex flex-col gap-2 md:items-center">
                         <h3 className="text-xl font-bold mb-3 gold-text-shadow-sm text-center">Contact</h3>
                         <p>

@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
+import Button from "../components/Button"
 // import firestore functions
 import { collection,getDocs, addDoc} from "firebase/firestore"
 import { db } from "../firebase"
 
-export default function MenuPage({tabs}){
+export default function MenuPage({tabs, user, logInClick,cart, addToCart,updateQuantity, removeItem}){
     const [activeTab, setActiveTab] = useState(tabs[0])
     const [menuItems, setMenuItems] = useState([]);
     
@@ -91,16 +92,58 @@ export default function MenuPage({tabs}){
                 </div>
                 <div className="pt-32 md:pt-24 lg:pt-20 pb-10 h-[calc(100vh-150px)] overflow-y-auto px-3 scrollbar-hidden">
                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-7">
-                        {filteredItems.map((item, index)=>(
+                        {filteredItems.map((item, index)=>{
+                            const inCart = cart.find(ci => ci.id === item.id); // check if item is in cart
+                            return(
                             <div key={index} className="card border border-slate-600/50 bg-gray-400/10 rounded-2xl overflow-hidden hover:cursor-pointer shadow-md hover:shadow-white transition-transform duration-500 hover:scale-105">
                                 <img src={imageMap[item.title.toLowerCase().replace(/\s+/g, "-")] || "/assets/placeholder.png"} alt={item.title} className="aspect-square w-full object-cover"/>
                                 <div className="text-white capitalize flex flex-col p-4 gap-3">
                                     <h3 className="truncate">{item.title}</h3>
                                     <p>Price:{item.price}</p>
-                                    <button className="border border-white/40 rounded-lg hover:border-amber-400 hover:bg-slate-300/40 hover:black-text-shadow-sm w-full py-1 px-2">Add to cart</button>
+                                    {user? (
+                                        <>
+                                            {inCart ? (
+                                            // ✅ Show quantity controls if already in cart
+                                            <div className="flex items-center gap-2">
+                                                <button
+                                                onClick={() => updateQuantity(item.id, inCart.quantity - 1)}
+                                                className="px-2 py-1 bg-slate-600 rounded hover:bg-slate-500"
+                                                >
+                                                -
+                                                </button>
+                                                <span>{inCart.quantity}</span>
+                                                <button
+                                                onClick={() => updateQuantity(item.id, inCart.quantity + 1)}
+                                                className="px-2 py-1 bg-slate-600 rounded hover:bg-slate-500"
+                                                >
+                                                +
+                                                </button>
+                                                <button
+                                                onClick={() => removeItem(item.id)}
+                                                className="px-3 py-1 bg-red-600 rounded hover:bg-red-500"
+                                                >
+                                                Remove
+                                                </button>
+                                            </div>
+                                            ) : (
+                                            // ✅ Show Add to Cart if not in cart
+                                            <button
+                                                onClick={() => addToCart(item)}
+                                                className="border border-white/40 rounded-lg hover:border-amber-400 hover:bg-slate-300/40 hover:black-text-shadow-sm w-full py-1 px-2"
+                                            >
+                                                Add to Cart
+                                            </button>
+                                            )}
+                                        </>
+                                    ) : (
+                                        <>
+                                          <Button onClickListener={logInClick} btnName="Log In To Order"/>
+                                        </>
+                                    )}
                                 </div>
                             </div>
-                        ))}
+                            )
+})}
                     </div>
                 </div>
                 <div className="h-[80px] fixed bottom-0 left-0 right-0 border-t border-t-white bg-black flex justify-center items-center">

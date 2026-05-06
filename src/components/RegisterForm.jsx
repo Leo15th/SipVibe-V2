@@ -61,7 +61,7 @@ export default function RegisterForm({onClose, onSwitchToLogIn, setUser}){
             <Button type="submit" btnName={loading?"Registering": "Register"} disabled={loading}/></div>
             <div className="flex gap-2 text-md">
                 <p className="capitalize">do you have an account?</p>
-                <button onClick={onSwitchToLogIn} className="text-green-600 duration-500 transition-transform hover:animate-bounce hover:white-text-shadow-sm">Log In Here</button>
+                <button onClick={onSwitchToLogIn} className="text-green-600 duration-300 transition-transform hover:scale-110 hover:white-text-shadow-sm">Log In Here</button>
             </div>
             <div className="z-20 absolute right-0 top-0 px-3">
                 <button onClick={onClose} className="text-4xl hover:scale-110 hover:text-red-600 hover:cursor-pointer hover:font-bold hover:white-text-shadow-sm"> × </button>

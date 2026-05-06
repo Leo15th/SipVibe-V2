@@ -27,7 +27,7 @@ export default function LogInForm({onClose, onSwitchToRegister, setUser}){
             alert("Log In Successful!")
             setUser(user);
         } catch (error) {
-            alert(error.message)
+            alert("Log In Failed!")
         } finally{
             setLoading(false)
         }
@@ -41,7 +41,7 @@ export default function LogInForm({onClose, onSwitchToRegister, setUser}){
             <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} className="px-2 py-1 outline-none bg-transparent border border-white/40 rounded-lg text-lg"/>
             <div className="flex justify-between items-center">                
                 <div className="flex items-center gap-2 py-1 text-md">
-                    <input type="checkbox"/>
+                    <input type="checkbox" className="hover:cursor-pointer"/>
                     <span>Remember Me</span>
                 </div>
                 <a href="" className="text-md text-amber-400 hover:scale-110">Forgot Password?</a>
@@ -49,7 +49,7 @@ export default function LogInForm({onClose, onSwitchToRegister, setUser}){
             <div className="w-1/2 mx-auto"><Button type="submit" btnName={loading?"Loging In": "Log In"} disabled={loading}/></div>
             <div className="flex gap-2 text-md">
                 <p className="capitalize">you don't have an account?</p>
-                <button  onClick={onSwitchToRegister} className="text-green-600 duration-500 transition-transform hover:animate-bounce hover:white-text-shadow-sm">Register Here</button>
+                <button  onClick={onSwitchToRegister} className="text-green-600 duration-300 transition-transform hover:scale-110 hover:white-text-shadow-sm">Register Here</button>
             </div>
             <div className="z-20 absolute right-0 top-0 px-3">
                 <button onClick={onClose} className="text-4xl hover:scale-110 hover:text-red-600 hover:cursor-pointer hover:font-bold hover:white-text-shadow-sm"> × </button>
